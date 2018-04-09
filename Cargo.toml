@@ -1,0 +1,10 @@
+[package]
+name = "keystats"
+version = "0.1.0"
+authors = ["Paul Lesur <paul.lesur@plesur.fr>"]
+
+[dependencies]
+libc = "*"
+log = "0.4"
+env_logger = "0.5.6"
+time = "*"
