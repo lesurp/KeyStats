@@ -190,8 +190,8 @@ fn save_keys(
             tmp_file
                 .write_all(
                     format!(
-                        "{} {} {} {} {}\n",
-                        val, key_name, p_comb.ctrl, p_comb.shift, p_comb.alt
+                        "{} {} {} {} {}, {}\n",
+                        val, key_name, p_comb.ctrl, p_comb.shift, p_comb.alt, p_comb.meta
                     ).as_bytes(),
                 )
                 .map_err(|e| format!("Error writing pressed_combinations to tmp file: {}", e))?;
