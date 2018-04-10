@@ -19,6 +19,7 @@ MODIFIERS_VAL = ("Shift", "Alt", "Ctrl", "Meta")
 individual_keys = defaultdict(lambda: 0)
 combinations = defaultdict(lambda: 0)
 modifiers = defaultdict(lambda: 0)
+all_goes = defaultdict(lambda: 0)
 total_modifiers = 0
 total_regular = 0
 total_combinations = 0
@@ -34,6 +35,7 @@ def handle_line(line):
     val = data[VAL_OFFSET]
     cnt = int(data[COUNT_OFFSET])
 
+    all_goes[val] += cnt
     # key IS a modifier
     if val in MODIFIERS_VAL:
         total_modifiers += cnt
@@ -58,6 +60,7 @@ def print_stats():
     sorted_individual_keys = sorted(individual_keys.items(), key=operator.itemgetter(1))[::-1]
     sorted_combinations = sorted(combinations.items(), key=operator.itemgetter(1))[::-1]
     sorted_modifiers = sorted(modifiers.items(), key=operator.itemgetter(1))[::-1]
+    sorted_all_goes = sorted(all_goes.items(), key=operator.itemgetter(1))[::-1]
 
     total = total_regular + total_modifiers + total_combinations
     print("TOTAL KEYS PRESSED: %d\n______________________" % total)
@@ -87,16 +90,20 @@ def print_stats():
             break
 
     i = 0
-    print("\nREGULAR KEYS: %2.2f%%\n" % (100*total_regular/total))
+    print("\nNO_MODIFIER REGULAR KEYS: %2.2f%%\n" % (100*total_regular/total))
     for (key, val) in sorted_individual_keys:
         i += 1
         print("%d. %s (%2.2f%%)" % (i, key, 100*val/total_regular))
         if i >= NUMBER_RANKED:
             break
 
-
-
-
+    i = 0
+    print("\nALL KEYS\n")
+    for (key, val) in sorted_all_goes:
+        i += 1
+        print("%d. %s (%2.2f%%)" % (i, key, 100*val/total))
+        if i >= NUMBER_RANKED:
+            break
 
 
 if __name__ == "__main__":
