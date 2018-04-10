@@ -190,7 +190,7 @@ fn save_keys(
             tmp_file
                 .write_all(
                     format!(
-                        "{} {} {} {} {}, {}\n",
+                        "{} {} {} {} {} {}\n",
                         val, key_name, p_comb.ctrl, p_comb.shift, p_comb.alt, p_comb.meta
                     ).as_bytes(),
                 )
@@ -207,13 +207,13 @@ fn move_previous_key_file() {
     if Path::new(MAIN_FILE).exists() {
         let unique_name = format!("{}", time::now().to_timespec().sec);
         let new_filename = Path::new(OLD_FILES_DIR).join(unique_name);
+        if new_filename.exists() {
+            println!("Fucking really");
+        }
+
         match std::fs::rename(MAIN_FILE, &new_filename) {
             Ok(_) => {}
             Err(e) => println!("Error moving old file :(\n{}", e),
-        }
-
-        if new_filename.exists() {
-            println!("Fucking really");
         }
     }
 }
